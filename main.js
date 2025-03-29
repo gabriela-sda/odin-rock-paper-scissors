@@ -12,54 +12,75 @@ function getComputerChoice() {
     }
 }
 
+// retorna a string digitada pelo usuário
 function getHumanChoice() {
     return prompt("Digite uma das opções: rock, paper ou scissors.", "");
+    // método prompt: retorna o valor de entrada
 }
 
-function playRound(computerChoice, humanChoice) {
-    if(computerChoice === "rock") {
-        if(humanChoice === "rock") {
-            return alert("Empate! Ambos jogadores escolheram pedra.");
+function playGame() {
+    let roundNumber = 0;
+    let computerScore = 0;
+    let humanScore = 0;
+
+    function playRound(computerChoice, humanChoice) {
+        if(computerChoice === "rock") {
+            if(humanChoice === "rock") {
+                alert("Empate! Ambos jogadores escolheram pedra.");
+            }
+            else if(humanChoice == "paper") {
+                humanScore++;
+                alert("Você ganhou essa rodada! Papel vence pedra.");
+            }
+            else {
+                computerScore++;
+                alert("Você perdeu essa rodada! Pedra vence tesoura.");
+            }
         }
-        else if(humanChoice == "paper") {
-            humanScore++;
-            return alert("Você ganhou! Papel vence pedra.");
+        else if(computerChoice === "paper") {
+            if(humanChoice === "rock") {
+                computerScore++;
+                alert("Você perdeu essa rodada! Papel vence pedra.");
+            }
+            else if(humanChoice == "paper") {
+                alert("Empate! Ambos jogadores escolheram papel.");
+            }
+            else {
+                humanScore++;
+                alert("Você ganhou essa rodada! Tesoura vence papel.");
+            }
         }
         else {
-            computerScore++;
-            return alert("Você perdeu! Pedra vence tesoura.");
+            if(humanChoice === "rock") {
+                humanScore++;
+                alert("Você ganhou essa rodada! Pedra vence tesoura.");
+            }
+            else if(humanChoice == "paper") {
+                computerScore++;
+                alert("Você perdeu essa rodada! Tesoura vence papel.");
+            }
+            else {
+                alert("Empate! Ambos jogadores escolheram tesoura.");
+            }
         }
+        return roundNumber++;
     }
-    else if(computerChoice === "paper") {
-        if(humanChoice === "rock") {
-            computerScore++;
-            return alert("Você perdeu! Papel vence pedra.");
-        }
-        else if(humanChoice == "paper") {
-            return alert("Empate! Ambos jogadores escolheram papel.");
-        }
-        else {
-            humanScore++;
-            return alert("Você ganhou! Tesoura vence papel.");
-        }
+
+    while(roundNumber < 5) {
+        let computerSelection = getComputerChoice();
+        let humanSelection = getHumanChoice().toLowerCase();
+        playRound(computerSelection, humanSelection);
+    }
+
+    if(computerScore > humanScore) {
+        return alert("Fim do jogo! \nPlacar final: computador = " + computerScore + " | usuário = " + humanScore + "\nVocê perdeu.");
+    }
+    else if(computerScore < humanScore) {
+        return alert("Fim do jogo! \nPlacar final: computador = " + computerScore + " | usuário = " + humanScore + "\nVocê ganhou.");
     }
     else {
-        if(humanChoice === "rock") {
-            humanScore++;
-            return alert("Você ganhou! Pedra vence tesoura.");
-        }
-        else if(humanChoice == "paper") {
-            computerScore++;
-            return alert("Você perdeu! Tesoura vence papel.");
-        }
-        else {
-            return alert("Empate! Ambos jogadores escolheram tesoura.");
-        }
+        return alert("Fim do jogo! \nPlacar final: computador = " + computerScore + " | usuário = " + humanScore + "\nEmpate.");
     }
 }
 
-let computerScore = 0;
-let humanScore = 0;
-const computerSelection = getComputerChoice();
-const humanSelection = getHumanChoice().toLowerCase();
-playRound(computerSelection, humanSelection);
+playGame();
